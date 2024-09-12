@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { hash } from 'bcrypt';
 
-@Entity({ name: 'users' })
+@Entity({ name: 'users' }) // чтобы таблица в БД называлась юсерс
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -28,8 +28,14 @@ export class UserEntity {
   password: string;
 
   @BeforeInsert() // что делать с паролем перед его вставкой в БД (перед самой первой вставкой)
-  @BeforeUpdate()
   async hashPassword() {
     this.password = await hash(this.password, 10); //npm run db:create src/migrations/CreateUsers потом npm run db:migrate
+  }
+
+  @BeforeUpdate()
+  async updatedPass() {
+    if (this.password) {
+      this.password = await hash(this.password, 10);
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { ArticleModule } from '@app/article/article.module';
 import {
   Module,
   NestModule,
@@ -13,7 +14,12 @@ import { UserModule } from '@app/user/user.module';
 import { AuthMiddleware } from '@app/middlewares/auth.middleware';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormconfig), TagModule, UserModule], //прокидываем ОРМ конфиг
+  imports: [
+    TypeOrmModule.forRoot(ormconfig),
+    TagModule,
+    UserModule,
+    ArticleModule,
+  ], //прокидываем ОРМ конфиг
   controllers: [AppController],
   providers: [AppService],
 })

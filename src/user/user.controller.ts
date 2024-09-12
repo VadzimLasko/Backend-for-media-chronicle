@@ -54,8 +54,6 @@ export class UserController {
 
   @Get('user')
   @UseGuards(AuthGuard)
-  U;
-  A;
   async currentUser(
     @User() user: UserEntity,
     @User('id') id: number,
